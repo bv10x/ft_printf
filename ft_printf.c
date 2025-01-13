@@ -1,13 +1,13 @@
-#include "ft_putchar.c"
-#include <stdarg.h>
-#include "ft_putnbr.c"
-#include "ft_deneme.c"
+#include "ft_printf.h"
+
 
 int	ft_type(char c, va_list valist)
 {
 	int	rtn;
 
 	rtn = 0;
+	if (!c)
+		return (-1);
 	if(c == 'd' || c == 'i')
 		rtn = ft_putnbr(va_arg(valist, int));
 	else if(c == 'c')
@@ -24,9 +24,12 @@ int	ft_type(char c, va_list valist)
 		rtn = ft_heX(va_arg(valist, unsigned int));
 	else if(c == '%')
 		rtn = ft_putchar('%');
+	else
+			return (-1);
+	return (rtn);
 }
 
-int	ft_printf(const char *abc, ...)
+int	ft_printf(const char *s, ...)
 {
 	int	i;
 	int	total;
@@ -34,28 +37,22 @@ int	ft_printf(const char *abc, ...)
 
 	i = 0;
 	total = 0;
-	va_start(valist, abc);
-	while(abc[i])
+	if (!s)
+		return (-1);
+	va_start(valist, s);
+	while(s[i])
 	{
-		if (abc[i] == '%')
+		if (s[i] == '%')
 		{
-			i++;
-			total += ft_type(abc[i], valist);
+			total += ft_type(s[i + 1], valist);
 		}
 		else
 		{
-			ft_putchar(abc[i]);
+			ft_putchar(s[i]);
 			total++;
 		}
 		i++;
 	}
+	va_end(valist);
 	return (total);
-}
-
-int	main()
-{
-	char x = 'b';
-	int	a = printf("baris");
-	printf("\n%c\t%c\n", 'a', x);
-	ft_printf("%c\t%c", 'a', x);
 }

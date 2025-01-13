@@ -1,5 +1,4 @@
-#include "ft_putchar.c"
-#include <stdio.h>
+#include "ft_printf.h"
 
 int	ft_putnbr(int n)
 {
@@ -89,10 +88,4 @@ int	ft_unbr(unsigned int nbr)
 	else
 		i += write(1, &"0123456789"[nbr], 1);
 	return (i);
-}
-
-int	main()
-{
-	int a = ft_cnvrt(256);
-	printf("%d", a);
 }
